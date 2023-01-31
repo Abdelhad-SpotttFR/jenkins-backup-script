@@ -8,10 +8,10 @@
 
 readonly JENKINS_HOME="$1"
 readonly DEST_FILE="$2"
-readonly DEST_DIR=$(cd $(dirname ${BASH_SOURCE:-$DEST_FILE}); pwd)
 readonly CUR_DIR=$(cd $(dirname ${BASH_SOURCE:-$0}); pwd)
 readonly TMP_DIR="${CUR_DIR}/tmp"
 readonly ARC_NAME="jenkins-backup"
+readonly DEST_DIR=$(cd $(dirname ${BASH_SOURCE:-$DEST_FILE}/${ARC_NAME}); pwd)
 readonly ARC_DIR="${TMP_DIR}/${ARC_NAME}"
 readonly TMP_TAR_NAME="${TMP_DIR}/archive.tar.gz"
 
@@ -23,7 +23,6 @@ function usage() {
 
 function cleanup() {
   rm -rf "${ARC_DIR}"
-  rm -rf "${DEST_DIR}/*.gz"
 }
 
 
@@ -33,6 +32,7 @@ function main() {
     exit 1
   fi
 
+  rm -rf "${DEST_DIR}/*gz"
   rm -rf "${ARC_DIR}" "{$TMP_TAR_NAME}"
   for plugin in plugins jobs users secrets nodes; do
     mkdir -p "${ARC_DIR}/${plugin}"
