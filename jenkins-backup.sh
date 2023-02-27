@@ -33,7 +33,7 @@ function main() {
   fi
 
   rm -rf "${DEST_DIR}/*gz"
-  rm -rf "${ARC_DIR}" "{$TMP_TAR_NAME}"
+  rm -rf "${ARC_DIR}" "${TMP_TAR_NAME}"
   for plugin in plugins jobs users secrets nodes; do
     mkdir -p "${ARC_DIR}/${plugin}"
   done
